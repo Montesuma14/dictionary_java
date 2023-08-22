@@ -1,12 +1,32 @@
 package org.example;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Dictionary {
-    private Map<Integer, String> dictionaryInt;
-    private Map<String, String> dictionaryStr;
+    Map<Integer, String> dictionaryInt;
+    Map<String, String> dictionaryStr;
     public Dictionary(){
+        File  dictionaryIntFile = new File("dictionaryInt.txt");
+        if(!dictionaryIntFile.exists()) {
+            try {
+                System.out.println("создан новый интовый словарь!");
+                dictionaryIntFile.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        File  dictionaryStrFile = new File("dictionaryStr.txt");
+        if(!dictionaryStrFile.exists()) {
+            try {
+                System.out.println("создан новый стринговый словарь словарь!");
+                dictionaryStrFile.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         dictionaryInt = new HashMap<>();
         dictionaryStr = new HashMap<>();
     }
@@ -44,6 +64,5 @@ public class Dictionary {
         }
         else return false;
     }
-
 
 }

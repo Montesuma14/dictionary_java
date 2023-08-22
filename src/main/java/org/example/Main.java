@@ -1,6 +1,8 @@
 package org.example;
 
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,20 +10,18 @@ import java.util.regex.Pattern;
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
-//    public static void main(String[] args) {
-//        //System.out.println("Словарь");
-//        test.test();
-//    }
+
+
 
 
     public static void main(String[] args) {
-        Dictionary dictionary = new Dictionary();
-        dictionary.putDictionary(111, "test");
-        dictionary.putDictionary(112, "tes1");
-        dictionary.putDictionary(115, "test2");
-        //String test =dictionary.getDictionary(299);
-        //System.out.println(test);
 
+        Dictionary dictionary = new Dictionary();
+        dictionary.putDictionary(11111, "абба");
+        dictionary.putDictionary(22222, "тетта");
+        dictionary.putDictionary(33333, "рыба");
+        dictionary.putDictionary(44444, "куб");
+        dictionary.putDictionary(55555, "сом");
 
         System.out.println("Программа словарей!");
         while (true){
@@ -29,9 +29,11 @@ public class Main {
             System.out.println("1.Добавить слово в словарь.");
             System.out.println("2.Получить слово по ключу.");
             System.out.println("3.Удалить слово по ключу.");
-            System.out.println("4.Выход.");
-            int command = take_command_and_check(4);
+            System.out.println("4.Вывести данные обоих словарей.");
+            System.out.println("5.Выход.");
+            int command = take_command_and_check(5);
             switch (command){
+                //Добавление нового слова в словарь
                 case 1-> {
                     System.out.println("В какой из словарей вы хотели бы добавить слово?");
                     System.out.println("1. Словарь интовый.");
@@ -41,14 +43,14 @@ public class Main {
                     switch (command){
                         // если пользователь вводит циферное слово, длинной 5 символов
                         case 1->{
-                            System.out.println("Введите слово в инте.");
+                            System.out.println("Введите слово в формате числа. Допустимая длина 5 символов.");
                             String wordKey = inLine();
                             while(!isDigit(wordKey) || !isInt5(wordKey)){
                                 System.out.println("Слово не является числом или имеет длинну 5 символов. " +
                                         "Пожалуйста, введите интовое значение длинной 5 символов");
                                 wordKey = inLine();
                             }
-                            System.out.println("Ваше слово" + wordKey + ". Введите его значение на русском языке:");
+                            System.out.println("Ваше слово: " + wordKey + ". Введите его значение на русском языке:");
                             String word = inLine();
                             while (!isRuWord(word)){
                                 System.out.println("Слово не является русским словом! " +
@@ -66,7 +68,7 @@ public class Main {
                                         "Пожалуйста, введите латинское слово длинной 4");
                                 wordKey = inLine();
                             }
-                            System.out.println("Ваше слово" + wordKey + ". Введите его значение на русском языке:");
+                            System.out.println("Ваше слово " + wordKey + ". Введите его значение на русском языке:");
                             String word = inLine();
                             while (!isRuWord(word)){
                                 System.out.println("Слово не является русским словом! " +
@@ -76,13 +78,134 @@ public class Main {
                             dictionary.putDictionary(wordKey, word);
                         }
                         case 3-> {
-                            return;
+                            break;
                         }
                     }
                 }
+                //Получение слова по ключу (Если оно есть)
+                case 2 ->{
+                    System.out.println("В каком из словарей вы бы хотели найти слово?");
+                    System.out.println("1. Словарь интовый.");
+                    System.out.println("2. Словарь латинский.");
+                    System.out.println("3. Назад.");
+                    command = take_command_and_check(3);
+                    switch (command){
+                        // если пользователь вводит циферное слово, длинной 5 символов
+                        case 1->{
+                            System.out.println("Введите слово в инте.");
+                            String wordKey = inLine();
+                            while(!isDigit(wordKey) || !isInt5(wordKey)){
+                                System.out.println("Слово не является числом или имеет длинну 5 символов. " +
+                                        "Пожалуйста, введите интовое значение длинной 5 символов");
+                                wordKey = inLine();
+                            }
+                            String dWord = dictionary.getDictionary(Integer.parseInt(wordKey));
+                            if (dWord != null)
+                                System.out.println("Ваше слово: " + dWord);
+                            else
+                                System.out.println("Слово с таким ключем не найдено!\n");
 
 
+                        }
+                        //действия, если пользователь вводит латинское слово, длинной 4 символа
+                        case 2->{
+                            System.out.println("Введите латинское слово длинной 4.");
+                            String wordKey = inLine();
+                            while(!isLatinWord(wordKey) || wordKey.length() != 4){
+                                System.out.println("Слово не является латинским или имеет длинну 4 символа. " +
+                                        "Пожалуйста, введите латинское слово длинной 4");
+                                wordKey = inLine();
+                            }
+                            String dWord = dictionary.getDictionary(wordKey);
+                            if (dWord != null)
+                                System.out.println("Ваше слово :" +dWord);
+                            else
+                                System.out.println("Слово с таким ключем не найдено!\n");
+                        }
+                        case 3-> {
+                            break;
+                        }
+                    }
+
+                }
+                //Удаление слова по ключу
+                case 3 -> {
+                    System.out.println("Из какого словаря вы бы хотели удалить слово?");
+                    System.out.println("1. Словарь интовый.");
+                    System.out.println("2. Словарь латинский.");
+                    System.out.println("3. Назад");
+                    command = take_command_and_check(3);
+                    switch (command) {
+                        //Удаление слова из интового словаря
+                        case 1->{
+                            System.out.println("Введите слово в формате числа. Допустимая длина 5 символов.");
+                            String wordKey = inLine();
+                            while(!isDigit(wordKey) || !isInt5(wordKey)){
+                                System.out.println("Слово не является числом или имеет длинну 5 символов. " +
+                                        "Пожалуйста, введите интовое значение длинной 5 символов");
+                                wordKey = inLine();
+                            }
+                            String wordRu = dictionary.getDictionary(wordKey);
+                            if (dictionary.removeWordDictionary(wordKey))
+                                System.out.println("Слово : " + wordKey + "с значением : " + wordRu + "Удалено.");
+                            else
+                                System.out.println("Слова с кодом : " + wordKey + "не найдено.");
+                        }
+                        //Удаления слова из латинского словаря
+                        case 2 -> {
+                            System.out.println("Введите латинское слово длинной 4.");
+                            String wordKey = inLine();
+                            while(!isLatinWord(wordKey) || wordKey.length() != 4){
+                                System.out.println("Слово не является латинским или имеет длинну 4 символа. " +
+                                        "Пожалуйста, введите латинское слово длинной 4");
+                                wordKey = inLine();
+                            }
+                            String wordRu = dictionary.getDictionary(wordKey);
+                            if (dictionary.removeWordDictionary(wordKey))
+                                System.out.println("Слово : " + wordKey + "с значением : " + wordRu + "Удалено.");
+                            else
+                                System.out.println("Слова с кодом : " + wordKey + "не найдено.");
+                        }
+                        case 3-> {
+                            break;
+                        }
+                    }
+
+
+                }
+                //Получение всех слов определенного словаря
                 case 4 ->{
+                    System.out.println("Какой из словарей вы бы хотели вывести?");
+                    System.out.println("1. Словарь интовый.");
+                    System.out.println("2. Словарь латинский.");
+                    System.out.println("3. Назад");
+                    command = take_command_and_check(3);
+                    switch (command) {
+                        //Получение всех слов Интового словаря
+                        case 1 -> {
+                            System.out.println("Интовый словарь:");
+                            for (Map.Entry<Integer, String> entry : dictionary.dictionaryInt.entrySet()) {
+                                System.out.println("Код =  " + entry.getKey() + " Значение = " + entry.getValue());
+                            }
+                            System.out.println();
+                        }
+                        //Получение всех слов латинского словаря
+                        case 2 -> {
+                            System.out.println("Латинский словарь");
+                            for (Map.Entry<String, String> entry : dictionary.dictionaryStr.entrySet()) {
+                            System.out.println("Код =  " + entry.getKey() + " Значение = " + entry.getValue());
+                            }
+                            System.out.println();
+                        }
+                        case 3-> {
+                            break;
+                        }
+                    }
+
+
+                }
+                //Выход из программы
+                case 5 ->{
                     System.out.println("Завершение программы.");
                     return;
                 }
@@ -125,11 +248,6 @@ public class Main {
         }
         return true;
     }
-
-
-
-
-
 
     //приём команд от пользователя
     public static byte  take_command_and_check(int commands){
