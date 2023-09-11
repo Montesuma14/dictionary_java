@@ -1,11 +1,8 @@
 package org.example;
 
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
@@ -17,11 +14,11 @@ public class Main {
     public static void main(String[] args) {
 
         Dictionary dictionary = new Dictionary();
-        dictionary.putDictionary(11111, "абба");
-        dictionary.putDictionary(22222, "тетта");
-        dictionary.putDictionary(33333, "рыба");
-        dictionary.putDictionary(44444, "куб");
-        dictionary.putDictionary(55555, "сом");
+        dictionary.putdictionaryInt("11111", "абба");
+        dictionary.putdictionaryInt("22222", "тетта");
+        dictionary.putdictionaryInt("33333", "рыба");
+        dictionary.putdictionaryInt("44444", "куб");
+        dictionary.putdictionaryInt("55555", "сом");
 
         System.out.println("Программа словарей!");
         while (true){
@@ -57,7 +54,7 @@ public class Main {
                                         "Пожалуйста, введите слово, содержащее только символы кириллицы!");
                                 word = inLine();
                             }
-                            dictionary.putDictionary(Integer.parseInt(wordKey), word);
+                            dictionary.putdictionaryInt(wordKey, word);
                         }
                         //действия, если пользователь вводит латинское слово, длинной 4 символа
                         case 2->{
@@ -75,7 +72,7 @@ public class Main {
                                         "Пожалуйста, введите слово, содержащее только символы кириллицы!");
                                 word = inLine();
                             }
-                            dictionary.putDictionary(wordKey, word);
+                            dictionary.putdictionaryStr(wordKey, word);
                         }
                         case 3-> {
                             break;
@@ -136,6 +133,7 @@ public class Main {
                     System.out.println("3. Назад");
                     command = take_command_and_check(3);
                     switch (command) {
+
                         //Удаление слова из интового словаря
                         case 1->{
                             System.out.println("Введите слово в формате числа. Допустимая длина 5 символов.");
@@ -146,11 +144,12 @@ public class Main {
                                 wordKey = inLine();
                             }
                             String wordRu = dictionary.getDictionary(wordKey);
-                            if (dictionary.removeWordDictionary(wordKey))
+                            if (dictionary.removeWordDictionary(Integer.parseInt(wordKey)))
                                 System.out.println("Слово : " + wordKey + "с значением : " + wordRu + "Удалено.");
                             else
                                 System.out.println("Слова с кодом : " + wordKey + "не найдено.");
                         }
+
                         //Удаления слова из латинского словаря
                         case 2 -> {
                             System.out.println("Введите латинское слово длинной 4.");
@@ -232,7 +231,7 @@ public class Main {
 
     public static boolean isRuWord( String s){
 
-        String abc = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+        String abc = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя ";
         for(int i = 0; i < s.length(); i++) {
             if(abc.indexOf(Character.toLowerCase(s.charAt(i))) ==-1)
                 return false;
@@ -240,6 +239,7 @@ public class Main {
         return true;
     }
 
+    //Проверка слова на то, все ли символы латинские.
     public static boolean isLatinWord(String s){
         String abc = "abcdefghijklmnopqrstuvwxyz";
         for(int i = 0; i < s.length(); i++) {
