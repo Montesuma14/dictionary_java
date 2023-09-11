@@ -14,11 +14,6 @@ public class Main {
     public static void main(String[] args) {
 
         Dictionary dictionary = new Dictionary();
-        dictionary.putdictionaryInt("11111", "абба");
-        dictionary.putdictionaryInt("22222", "тетта");
-        dictionary.putdictionaryInt("33333", "рыба");
-        dictionary.putdictionaryInt("44444", "куб");
-        dictionary.putdictionaryInt("55555", "сом");
 
         System.out.println("Программа словарей!");
         while (true){
