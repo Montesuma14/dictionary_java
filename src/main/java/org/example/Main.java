@@ -37,14 +37,14 @@ public class Main {
                         case 1->{
                             System.out.println("Введите слово в формате числа. Допустимая длина 5 символов.");
                             String wordKey = inLine();
-                            while(!isDigit(wordKey) || !isInt5(wordKey)){
+                            while(!isDigit(wordKey) || isInt5(wordKey)){
                                 System.out.println("Слово не является числом или имеет длинну 5 символов. " +
                                         "Пожалуйста, введите интовое значение длинной 5 символов");
                                 wordKey = inLine();
                             }
                             System.out.println("Ваше слово: " + wordKey + ". Введите его значение на русском языке:");
                             String word = inLine();
-                            while (!isRuWord(word)){
+                            while (isRuWord(word)){
                                 System.out.println("Слово не является русским словом! " +
                                         "Пожалуйста, введите слово, содержащее только символы кириллицы!");
                                 word = inLine();
@@ -55,14 +55,14 @@ public class Main {
                         case 2->{
                             System.out.println("Введите латинское слово длинной 4.");
                             String wordKey = inLine();
-                            while(!isLatinWord(wordKey) || wordKey.length() != 4){
+                            while(isLatinWord(wordKey) || wordKey.length() != 4){
                                 System.out.println("Слово не является латинским или имеет длинну 4 символа. " +
                                         "Пожалуйста, введите латинское слово длинной 4");
                                 wordKey = inLine();
                             }
                             System.out.println("Ваше слово " + wordKey + ". Введите его значение на русском языке:");
                             String word = inLine();
-                            while (!isRuWord(word)){
+                            while (isRuWord(word)){
                                 System.out.println("Слово не является русским словом! " +
                                         "Пожалуйста, введите слово, содержащее только символы кириллицы!");
                                 word = inLine();
@@ -70,7 +70,7 @@ public class Main {
                             dictionary.putdictionaryStr(wordKey, word);
                         }
                         case 3-> {
-                            break;
+                            //break;
                         }
                     }
                 }
@@ -86,7 +86,7 @@ public class Main {
                         case 1->{
                             System.out.println("Введите слово в инте.");
                             String wordKey = inLine();
-                            while(!isDigit(wordKey) || !isInt5(wordKey)){
+                            while(!isDigit(wordKey) || isInt5(wordKey)){
                                 System.out.println("Слово не является числом или имеет длинну 5 символов. " +
                                         "Пожалуйста, введите интовое значение длинной 5 символов");
                                 wordKey = inLine();
@@ -103,7 +103,7 @@ public class Main {
                         case 2->{
                             System.out.println("Введите латинское слово длинной 4.");
                             String wordKey = inLine();
-                            while(!isLatinWord(wordKey) || wordKey.length() != 4){
+                            while(isLatinWord(wordKey) || wordKey.length() != 4){
                                 System.out.println("Слово не является латинским или имеет длинну 4 символа. " +
                                         "Пожалуйста, введите латинское слово длинной 4");
                                 wordKey = inLine();
@@ -115,7 +115,7 @@ public class Main {
                                 System.out.println("Слово с таким ключем не найдено!\n");
                         }
                         case 3-> {
-                            break;
+                            //break;
                         }
                     }
 
@@ -133,7 +133,7 @@ public class Main {
                         case 1->{
                             System.out.println("Введите слово в формате числа. Допустимая длина 5 символов.");
                             String wordKey = inLine();
-                            while(!isDigit(wordKey) || !isInt5(wordKey)){
+                            while(!isDigit(wordKey) || isInt5(wordKey)){
                                 System.out.println("Слово не является числом или имеет длинну 5 символов. " +
                                         "Пожалуйста, введите интовое значение длинной 5 символов");
                                 wordKey = inLine();
@@ -149,7 +149,7 @@ public class Main {
                         case 2 -> {
                             System.out.println("Введите латинское слово длинной 4.");
                             String wordKey = inLine();
-                            while(!isLatinWord(wordKey) || wordKey.length() != 4){
+                            while(isLatinWord(wordKey) || wordKey.length() != 4){
                                 System.out.println("Слово не является латинским или имеет длинну 4 символа. " +
                                         "Пожалуйста, введите латинское слово длинной 4");
                                 wordKey = inLine();
@@ -161,7 +161,7 @@ public class Main {
                                 System.out.println("Слова с кодом : " + wordKey + "не найдено.");
                         }
                         case 3-> {
-                            break;
+                            //break;
                         }
                     }
 
@@ -192,7 +192,7 @@ public class Main {
                             System.out.println();
                         }
                         case 3-> {
-                            break;
+                            //break;
                         }
                     }
 
@@ -219,9 +219,7 @@ public class Main {
 
     public static boolean isInt5(String s) {
         int r = Integer.parseInt(s);
-        if (r > 9999 && r < 100000)
-            return true;
-        else return false;
+        return r <= 9999 || r >= 100000;
     }
 
     public static boolean isRuWord( String s){
@@ -229,9 +227,9 @@ public class Main {
         String abc = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя ";
         for(int i = 0; i < s.length(); i++) {
             if(abc.indexOf(Character.toLowerCase(s.charAt(i))) ==-1)
-                return false;
+                return true;
         }
-        return true;
+        return false;
     }
 
     //Проверка слова на то, все ли символы латинские.
@@ -239,9 +237,9 @@ public class Main {
         String abc = "abcdefghijklmnopqrstuvwxyz";
         for(int i = 0; i < s.length(); i++) {
             if(abc.indexOf(Character.toLowerCase(s.charAt(i))) ==-1)
-                return false;
+                return true;
         }
-        return true;
+        return false;
     }
 
     //приём команд от пользователя
@@ -275,13 +273,6 @@ public class Main {
         }
         return "111111111111111111111111111111111";
     }
-
-
-    public static void putDictionaryInt(){
-
-    }
-
-
 
 
 }

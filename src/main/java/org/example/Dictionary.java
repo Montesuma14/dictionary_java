@@ -158,7 +158,7 @@ public class Dictionary {
 
     private static void writingHashMapStr(HashMap<String, String> dictionaryInt, FileOutputStream out) throws IOException {
         for (Map.Entry<String, String> entry : dictionaryInt.entrySet()) {
-            out.write(entry.getKey().toString().getBytes());
+            out.write(entry.getKey().getBytes());
             out.write('@');
             out.write(entry.getValue().getBytes());
             out.write('\n');
