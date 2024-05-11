@@ -42,3 +42,6 @@ build/
 
 ### out ###
 /out
+
+dictionaryInt.txt
+dictionaryStr.txt
